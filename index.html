@@ -1,324 +1,248 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>AmJ Portfolio + Videos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>AmJ Game Style Site</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Prompt', sans-serif;
-      background: #0f172a;
-      color: white;
-    }
+<style>
 
-    /* ================= HEADER ================= */
-    header {
-      background: #020617;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+/* ================= BASE ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+}
 
-    header h1 {
-      color: #38bdf8;
-    }
+body {
+  background: radial-gradient(circle at top, #1b2a4a, #050814);
+  color: white;
+  overflow-x: hidden;
+}
 
-    nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-    }
+/* ================= BACKGROUND FX ================= */
+.bg-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: #4cc9f0;
+  filter: blur(200px);
+  opacity: 0.25;
+  top: -100px;
+  left: -100px;
+  animation: move 8s infinite alternate;
+}
 
-    nav a:hover {
-      color: #38bdf8;
-    }
+@keyframes move {
+  from { transform: translate(0,0); }
+  to { transform: translate(200px,150px); }
+}
 
-    /* ================= HERO ================= */
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-    }
+/* ================= HEADER ================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+}
 
-    .profile-container {
-      position: relative;
-      display: inline-block;
-    }
+.logo {
+  font-weight: 800;
+  font-size: 24px;
+  color: #4cc9f0;
+}
 
-    .profile-img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #38bdf8;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
-    }
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  transition: 0.3s;
+}
 
-    .profile-img:hover {
-      transform: scale(1.1) translateY(-8px);
-      box-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8;
-    }
+nav a:hover {
+  color: #4cc9f0;
+}
 
-    .speech-bubble {
-      position: absolute;
-      top: -10px;
-      right: -120px;
-      background: white;
-      color: #0f172a;
-      padding: 10px 15px;
-      border-radius: 15px;
-      font-weight: bold;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      animation: float 2s ease-in-out infinite;
-    }
+/* ================= HERO ================= */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+}
 
-    .speech-bubble::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 20px;
-      border: 10px solid transparent;
-      border-top-color: white;
-    }
+.hero-text {
+  max-width: 500px;
+}
 
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0px); }
-    }
+.hero-text h1 {
+  font-size: 60px;
+  line-height: 1.1;
+}
 
-    .hero p {
-      color: #94a3b8;
-    }
+.hero-text span {
+  color: #4cc9f0;
+}
 
-    /* ================= SECTIONS ================= */
-    .section {
-      padding: 60px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
+.hero-text p {
+  margin: 20px 0;
+  color: #b0c4de;
+}
 
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #4cc9f0;
+  color: black;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-    /* ================= VIDEO PLAYER ================= */
-    .player {
-      max-width: 900px;
-      margin: 30px auto;
-    }
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #4cc9f0;
+}
 
-    .player iframe {
-      width: 100%;
-      height: 500px;
-      border-radius: 15px;
-      border: none;
-    }
+/* HERO IMAGE */
+.hero-img {
+  width: 400px;
+  animation: float 4s ease-in-out infinite;
+}
 
-    /* ================= VIDEO GRID ================= */
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 30px;
-    }
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
 
-    .video-card {
-      perspective: 1000px;
-      cursor: pointer;
-    }
+/* ================= SECTION ================= */
+.section {
+  padding: 100px 10%;
+}
 
-    .card-inner {
-      position: relative;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: transform 0.2s ease;
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
+.section h2 {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
 
-    .card-inner img {
-      width: 100%;
-      display: block;
-      border-radius: 15px;
-    }
+/* ================= CARDS ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
 
-    .video-title {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #e2e8f0;
-    }
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 15px;
+  transition: 0.3s;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
 
-    .glare {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, rgba(255,255,255,0.35), transparent);
-      opacity: 0;
-      pointer-events: none;
-    }
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 30px rgba(76,201,240,0.4);
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #020617;
-      margin-top: 40px;
-    }
-  </style>
+/* ================= VIDEO ================= */
+.video {
+  width: 100%;
+  height: 400px;
+  border-radius: 15px;
+  border: none;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+}
+
+</style>
 </head>
 
 <body>
 
+<div class="bg-glow"></div>
+
 <header>
-  <h1>AmJ</h1>
+  <div class="logo">AmJ</div>
   <nav>
-    <a href="#about">เกี่ยวกับ</a>
-    <a href="#videos">วิดีโอ</a>
-    <a href="#contact">ติดต่อ</a>
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#videos">Videos</a>
   </nav>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="profile-container">
-    <img src="Profile-G.gif" class="profile-img">
+<!-- HERO -->
+<section class="hero" id="home">
 
-    <div class="speech-bubble" id="bubble-text">
-      WASSUP🍀
-    </div>
-  </div>
-
-  <p>นี่คือเว็บไซต์ของฉัน สร้างด้วย GitHub Pages</p>
-</section>
-
-<!-- ================= ABOUT ================= -->
-<section id="about" class="section">
-  <h2>เกี่ยวกับฉัน</h2>
-  <div class="card">
+  <div class="hero-text">
+    <h1>Welcome to <span>AmJ World</span></h1>
     <p>
-      Hey! I’m into games like Brawl Stars, League of Legends: Wild Rift<br>
-      I also watch YouTube, especially AmJ.
+      สไตล์เว็บเกมแบบ :contentReference[oaicite:2]{index=2}  
+      inspired by :contentReference[oaicite:3]{index=3}  
     </p>
+
+    <a class="btn" href="#games">Enter Now</a>
   </div>
+
+  <img class="hero-img" src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+
 </section>
 
-<!-- ================= VIDEO PLAYER ================= -->
-<section id="videos" class="section">
-  <h2>🎬 วิดีโอของฉัน</h2>
+<!-- GAMES -->
+<section class="section" id="games">
+  <h2>🔥 My Characters</h2>
 
-  <div class="player">
-    <iframe id="main-video"
-      src="https://www.youtube.com/embed/QIbQG2Y_DVE">
-    </iframe>
-  </div>
+  <div class="grid">
 
-  <div class="video-grid">
-
-    <div class="video-card" onclick="playVideo('QIbQG2Y_DVE')">
-      <div class="card-inner">
-        <img src="https://img.youtube.com/vi/QIbQG2Y_DVE/hqdefault.jpg">
-        <div class="glare"></div>
-      </div>
-      <div class="video-title">Highlight 🔥</div>
+    <div class="card">
+      <h3>⚡ Warrior</h3>
+      <p>Fast attack + high damage</p>
     </div>
 
-    <div class="video-card" onclick="playVideo('2u9g9D5_bx4')">
-      <div class="card-inner">
-        <img src="https://img.youtube.com/vi/2u9g9D5_bx4/hqdefault.jpg">
-        <div class="glare"></div>
-      </div>
-      <div class="video-title">Funny 😂</div>
+    <div class="card">
+      <h3>🔥 Mage</h3>
+      <p>Magic burst + control</p>
     </div>
 
-    <div class="video-card" onclick="playVideo('b-gBRB0wboE')">
-      <div class="card-inner">
-        <img src="https://img.youtube.com/vi/b-gBRB0wboE/hqdefault.jpg">
-        <div class="glare"></div>
-      </div>
-      <div class="video-title">Epic ⚡</div>
-    </div>
-
-    <div class="video-card" onclick="playVideo('8Gt7-7k_GIk')">
-      <div class="card-inner">
-        <img src="https://img.youtube.com/vi/8Gt7-7k_GIk/hqdefault.jpg">
-        <div class="glare"></div>
-      </div>
-      <div class="video-title">Short 🎯</div>
+    <div class="card">
+      <h3>🛡 Tank</h3>
+      <p>High HP + defense</p>
     </div>
 
   </div>
 </section>
 
-<!-- ================= FOOTER ================= -->
+<!-- VIDEOS -->
+<section class="section" id="videos">
+  <h2>🎬 Gameplay</h2>
+
+  <iframe class="video"
+    src="https://www.youtube.com/embed/QIbQG2Y_DVE"
+    allowfullscreen>
+  </iframe>
+
+</section>
+
 <footer>
-  <p>© 2026 AmJ Website</p>
+  © 2026 AmJ Game Style Website
 </footer>
-
-<!-- ================= SCRIPT ================= -->
-<script>
-  // 🎬 เปลี่ยนวิดีโอ
-  function playVideo(id) {
-    document.getElementById("main-video").src =
-      "https://www.youtube.com/embed/" + id + "?autoplay=1";
-  }
-
-  // 💬 bubble text
-  const words = ["WASSUP🍀", "HELLO 👋", "YO 😎", "HI THERE ✨"];
-  const bubble = document.getElementById("bubble-text");
-
-  setInterval(() => {
-    bubble.textContent = words[Math.floor(Math.random() * words.length)];
-  }, 2000);
-
-  // 🎯 3D hover + glare
-  document.querySelectorAll(".video-card").forEach(card => {
-    const inner = card.querySelector(".card-inner");
-    const glare = card.querySelector(".glare");
-
-    let tx = 0, ty = 0;
-    let cx = 0, cy = 0;
-
-    function animate() {
-      cx += (tx - cx) * 0.15;
-      cy += (ty - cy) * 0.15;
-
-      inner.style.transform =
-        `rotateY(${cx}deg) rotateX(${cy}deg) scale(1.05)`;
-
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    card.addEventListener("mousemove", e => {
-      const r = card.getBoundingClientRect();
-
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-
-      tx = (x - r.width / 2) / 12;
-      ty = -(y - r.height / 2) / 12;
-
-      glare.style.opacity = 1;
-      glare.style.background =
-        `radial-gradient(circle at ${(x/r.width)*100}% ${(y/r.height)*100}%, rgba(255,255,255,0.3), transparent 60%)`;
-    });
-
-    card.addEventListener("mouseleave", () => {
-      tx = 0;
-      ty = 0;
-      glare.style.opacity = 0;
-    });
-  });
-</script>
 
 </body>
 </html>
