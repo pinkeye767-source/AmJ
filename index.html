@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <title>AmJ Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid #38bdf8;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
     }
 
     .profile-img:hover {
@@ -87,11 +87,9 @@
       100% { transform: translateY(0px); }
     }
 
-    .hero p { color: #94a3b8; }
-
     .section {
       padding: 60px 20px;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
     }
 
@@ -102,25 +100,65 @@
       margin-top: 20px;
     }
 
-    /* 🎬 Netflix style YouTube */
+    /* 🎬 Netflix Row */
     .youtube-row {
       display: flex;
       overflow-x: auto;
-      gap: 15px;
+      gap: 20px;
       padding: 20px 0;
     }
 
-    .youtube-row iframe {
+    /* 🎥 Card */
+    .video-card {
+      position: relative;
       min-width: 300px;
       height: 180px;
-      border-radius: 10px;
-      border: none;
+      border-radius: 15px;
+      overflow: hidden;
       transition: transform 0.3s ease;
     }
 
-    .youtube-row iframe:hover {
+    .video-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* overlay */
+    .video-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    /* title */
+    .video-info {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      color: white;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: 0.3s;
+    }
+
+    /* hover effect */
+    .video-card:hover {
       transform: scale(1.2);
       z-index: 10;
+    }
+
+    .video-card:hover::before {
+      opacity: 1;
+    }
+
+    .video-card:hover .video-info {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .youtube-row::-webkit-scrollbar {
@@ -142,7 +180,6 @@
   <h1>AmJ</h1>
   <nav>
     <a href="#about">เกี่ยวกับ</a>
-    <a href="#portfolio">ผลงาน</a>
     <a href="#youtube">YouTube</a>
     <a href="#contact">ติดต่อ</a>
   </nav>
@@ -150,40 +187,47 @@
 
 <section class="hero">
   <div class="profile-container">
-    <img src="Profile-G.gif" class="profile-img">
+    <img src="profile-A.jpg" class="profile-img">
 
     <div class="speech-bubble" id="bubble-text">
       WASSUP🍀
     </div>
   </div>
-
-  <p>นี่คือเว็บไซต์ของฉัน สร้างด้วย GitHub Pages</p>
 </section>
 
 <section id="about" class="section">
   <h2>เกี่ยวกับฉัน</h2>
   <div class="card">
-    <p>Hey! I’m into games like Brawl Stars, League of Legends : wild rift
-    I also watch YouTube, especially AmJ.</p>
+    <p>Hey! I’m into games, YouTube and content creation 🎮</p>
   </div>
 </section>
 
-<section id="portfolio" class="section">
-  <h2>ผลงาน</h2>
-  <div class="card">
-    <p>watching AmJ on YouTube</p>
-  </div>
-</section>
-
-<!-- 🎬 Netflix YouTube -->
+<!-- 🎬 YouTube Netflix Style -->
 <section id="youtube" class="section">
   <h2>🎬 My YouTube</h2>
 
   <div class="youtube-row">
-    <iframe src="https://youtu.be/QIbQG2Y_DVE?si=cKw9WcwgjppQBDct"></iframe>
-    <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ"></iframe>
-    <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
-    <iframe src="https://www.youtube.com/embed/oHg5SJYRHA0"></iframe>
+
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+      <div class="video-info">My Video 1</div>
+    </div>
+
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ"></iframe>
+      <div class="video-info">My Video 2</div>
+    </div>
+
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+      <div class="video-info">My Video 3</div>
+    </div>
+
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/oHg5SJYRHA0"></iframe>
+      <div class="video-info">My Video 4</div>
+    </div>
+
   </div>
 </section>
 
@@ -195,17 +239,16 @@
 </section>
 
 <footer>
-  <p>© 2026 My Website</p>
+  <p>© 2026 AmJ</p>
 </footer>
 
-<!-- 🔄 สุ่มคำ -->
+<!-- 🔄 random bubble -->
 <script>
   const words = ["WASSUP🍀", "HELLO 👋", "YO 😎", "HI THERE ✨"];
   const bubble = document.getElementById("bubble-text");
 
   function randomWord() {
-    const randomIndex = Math.floor(Math.random() * words.length);
-    bubble.textContent = words[randomIndex];
+    bubble.textContent = words[Math.floor(Math.random() * words.length)];
   }
 
   setInterval(randomWord, 2000);
