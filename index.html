@@ -1,100 +1,328 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My First GitHub Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f4;
-      color: #333;
-    }
-    header {
-      background: #24292e;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background: #0366d6;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      background: white;
-      border-radius: 8px;
-      margin-top: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      margin-top: 20px;
-      background: #ddd;
-    }
-    button {
-      padding: 10px 15px;
-      border: none;
-      background: #28a745;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #218838;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>AmJ Modular Game Site</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===================================================
+🧠 1. CONFIG / BASE THEME
+=================================================== */
+:root{
+  --main:#4cc9f0;
+  --bg:#050814;
+  --text:#ffffff;
+  --card:rgba(255,255,255,0.05);
+  --glow:rgba(76,201,240,0.5);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Prompt',sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ===================================================
+🌌 2. BACKGROUND SYSTEM
+=================================================== */
+.bg-glow{
+  position:fixed;
+  width:600px;
+  height:600px;
+  background:var(--main);
+  filter:blur(200px);
+  opacity:0.2;
+  top:-150px;
+  left:-150px;
+}
+
+/* ===================================================
+🎯 3. HEADER
+=================================================== */
+header{
+  position:fixed;
+  width:100%;
+  padding:20px 50px;
+  display:flex;
+  justify-content:space-between;
+  background:rgba(0,0,0,0.2);
+  backdrop-filter:blur(10px);
+  z-index:100;
+}
+
+.logo{
+  color:var(--main);
+  font-weight:800;
+  font-size:24px;
+}
+
+/* ===================================================
+🎮 4. HERO SYSTEM
+=================================================== */
+.hero{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10%;
+  perspective:1000px;
+}
+
+.hero-text{
+  max-width:500px;
+}
+
+.hero-text h1{
+  font-size:60px;
+}
+
+.hero-text span{
+  color:var(--main);
+}
+
+.hero-text p{
+  color:#b0c4de;
+  margin:20px 0;
+}
+
+.btn{
+  display:inline-block;
+  padding:12px 25px;
+  background:var(--main);
+  color:black;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* HERO IMAGE */
+.hero-img{
+  width:380px;
+  transition:0.2s;
+  animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+  100%{transform:translateY(0);}
+}
+
+/* ===================================================
+🎴 5. CARD SYSTEM
+=================================================== */
+.section{
+  padding:120px 10%;
+}
+
+.section h2{
+  font-size:40px;
+  margin-bottom:30px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+
+.card{
+  background:var(--card);
+  padding:25px;
+  border-radius:16px;
+  backdrop-filter:blur(10px);
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.card:hover{
+  transform:translateY(-15px) scale(1.05);
+  box-shadow:0 0 40px var(--glow);
+}
+
+/* ===================================================
+🌟 6. EFFECT SYSTEM
+=================================================== */
+.particle{
+  position:fixed;
+  width:5px;
+  height:5px;
+  background:var(--main);
+  border-radius:50%;
+  opacity:0.5;
+  animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(100vh);opacity:0;}
+  50%{opacity:1;}
+  to{transform:translateY(-10vh);opacity:0;}
+}
+
+.cursor-glow{
+  position:fixed;
+  width:20px;
+  height:20px;
+  background:var(--main);
+  border-radius:50%;
+  filter:blur(10px);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+}
+
+/* ===================================================
+🎬 7. VIDEO
+=================================================== */
+.video{
+  width:100%;
+  height:450px;
+  border-radius:16px;
+  border:none;
+}
+
+/* ===================================================
+✨ 8. ANIMATION
+=================================================== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>ยินดีต้อนรับสู่เว็บไซต์ของฉัน 🚀</h1>
-    <p>สร้างด้วย GitHub Pages</p>
-  </header>
 
-  <nav>
-    <a href="#home">หน้าแรก</a>
-    <a href="#about">เกี่ยวกับ</a>
-    <a href="#contact">ติดต่อ</a>
-  </nav>
+<!-- ===================================================
+🌌 EFFECT ELEMENTS
+=================================================== -->
+<div class="bg-glow"></div>
+<div class="cursor-glow" id="cursor"></div>
 
-  <div class="container" id="home">
-    <h2>หน้าแรก</h2>
-    <p>นี่คือเว็บไซต์แรกของคุณที่โฮสต์ฟรีบน GitHub Pages</p>
-    <button onclick="sayHello()">คลิกฉัน</button>
+<!-- ===================================================
+🎯 HEADER
+=================================================== -->
+<header>
+  <div class="logo">AmJ</div>
+</header>
+
+<!-- ===================================================
+🎮 HERO SECTION
+=================================================== -->
+<section class="hero">
+
+  <div class="hero-text">
+    <h1>Welcome to <span>AmJ World</span></h1>
+    <p>
+      Inspired by :contentReference[oaicite:2]{index=2} and :contentReference[oaicite:3]{index=3}
+    </p>
+
+    <div class="btn">Play Now</div>
   </div>
 
-  <div class="container" id="about">
-    <h2>เกี่ยวกับฉัน</h2>
-    <p>คุณสามารถแก้ไขข้อความนี้ให้เป็นข้อมูลของคุณเองได้</p>
+  <img class="hero-img" id="heroImg"
+    src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+
+</section>
+
+<!-- ===================================================
+🎴 CARDS SECTION (EDIT EASY HERE)
+=================================================== -->
+<section class="section">
+  <h2>🔥 Characters</h2>
+
+  <div class="grid" id="cardContainer">
+    <!-- 🎯 ADD CARDS HERE (DATA CONTROLLED BELOW) -->
   </div>
+</section>
 
-  <div class="container" id="contact">
-    <h2>ติดต่อ</h2>
-    <p>Email: your@email.com</p>
-  </div>
+<!-- ===================================================
+🎬 VIDEO SECTION
+=================================================== -->
+<section class="section">
+  <h2>🎬 Gameplay</h2>
 
-  <footer>
-    <p>© 2026 My Website</p>
-  </footer>
+  <iframe class="video"
+    src="https://www.youtube.com/embed/QIbQG2Y_DVE">
+  </iframe>
 
-  <script>
-    function sayHello() {
-      alert("สวัสดี! ยินดีต้อนรับ 😄");
-    }
-  </script>
+</section>
+
+<!-- ===================================================
+⚙️ SCRIPT SYSTEM
+=================================================== -->
+<script>
+
+/* ===================================================
+📦 9. DATA (แก้ตรงนี้เพิ่มคอนเทนต์ง่ายสุด)
+=================================================== */
+const gameData = [
+  { title:"⚡ Speed Fighter", desc:"Fast attack + mobility" },
+  { title:"🔥 Fire Mage", desc:"High burst damage" },
+  { title:"🛡 Tank Guard", desc:"High defense HP" }
+];
+
+/* ===================================================
+🎴 10. RENDER CARDS SYSTEM
+=================================================== */
+const container = document.getElementById("cardContainer");
+
+gameData.forEach(item=>{
+  const card = document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+    <h3>${item.title}</h3>
+    <p>${item.desc}</p>
+  `;
+  container.appendChild(card);
+});
+
+/* ===================================================
+🌟 11. PARTICLES SYSTEM
+=================================================== */
+for(let i=0;i<20;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(p);
+}
+
+/* ===================================================
+🧠 12. CURSOR EFFECT
+=================================================== */
+const cursor=document.getElementById("cursor");
+
+document.addEventListener("mousemove",(e)=>{
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
+});
+
+/* ===================================================
+🎮 13. HERO FOLLOW MOUSE
+=================================================== */
+const heroImg=document.getElementById("heroImg");
+
+document.addEventListener("mousemove",(e)=>{
+  let x=(window.innerWidth/2 - e.clientX)/30;
+  let y=(window.innerHeight/2 - e.clientY)/30;
+
+  heroImg.style.transform=
+    `rotateY(${x}deg) rotateX(${y}deg) translateY(-10px)`;
+});
+
+</script>
+
 </body>
 </html>
