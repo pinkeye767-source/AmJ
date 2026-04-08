@@ -2,14 +2,24 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>AmJ - AAA Game World</title>
+<title>AmJ Modular Game Site</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= RESET ================= */
+/* ===================================================
+🧠 1. CONFIG / BASE THEME
+=================================================== */
+:root{
+  --main:#4cc9f0;
+  --bg:#050814;
+  --text:#ffffff;
+  --card:rgba(255,255,255,0.05);
+  --glow:rgba(76,201,240,0.5);
+}
+
 *{
   margin:0;
   padding:0;
@@ -18,47 +28,32 @@
 }
 
 body{
-  background:#050814;
-  color:white;
+  background:var(--bg);
+  color:var(--text);
   overflow-x:hidden;
 }
 
-/* ================= PARTICLES ================= */
-.particle{
+/* ===================================================
+🌌 2. BACKGROUND SYSTEM
+=================================================== */
+.bg-glow{
   position:fixed;
-  width:6px;
-  height:6px;
-  background:#4cc9f0;
-  border-radius:50%;
-  opacity:0.5;
-  animation: floatUp linear infinite;
-}
-
-@keyframes floatUp{
-  from{transform:translateY(100vh);opacity:0;}
-  50%{opacity:1;}
-  to{transform:translateY(-10vh);opacity:0;}
-}
-
-/* ================= BACKGROUND ================= */
-.bg1,.bg2{
-  position:fixed;
-  width:800px;
-  height:800px;
-  border-radius:50%;
-  filter:blur(150px);
+  width:600px;
+  height:600px;
+  background:var(--main);
+  filter:blur(200px);
   opacity:0.2;
-  z-index:-1;
+  top:-150px;
+  left:-150px;
 }
 
-.bg1{background:#4cc9f0;top:-200px;left:-200px;}
-.bg2{background:#ff006e;bottom:-200px;right:-200px;}
-
-/* ================= HEADER ================= */
+/* ===================================================
+🎯 3. HEADER
+=================================================== */
 header{
   position:fixed;
   width:100%;
-  padding:20px 60px;
+  padding:20px 50px;
   display:flex;
   justify-content:space-between;
   background:rgba(0,0,0,0.2);
@@ -67,12 +62,14 @@ header{
 }
 
 .logo{
-  color:#4cc9f0;
-  font-size:24px;
+  color:var(--main);
   font-weight:800;
+  font-size:24px;
 }
 
-/* ================= HERO ================= */
+/* ===================================================
+🎮 4. HERO SYSTEM
+=================================================== */
 .hero{
   height:100vh;
   display:flex;
@@ -82,10 +79,8 @@ header{
   perspective:1000px;
 }
 
-/* HERO TEXT */
 .hero-text{
   max-width:500px;
-  animation:fadeIn 1s ease;
 }
 
 .hero-text h1{
@@ -93,7 +88,7 @@ header{
 }
 
 .hero-text span{
-  color:#4cc9f0;
+  color:var(--main);
 }
 
 .hero-text p{
@@ -104,24 +99,18 @@ header{
 .btn{
   display:inline-block;
   padding:12px 25px;
-  background:#4cc9f0;
+  background:var(--main);
   color:black;
   border-radius:12px;
   font-weight:bold;
-  transition:0.3s;
+  cursor:pointer;
 }
 
-.btn:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 25px #4cc9f0;
-}
-
-/* HERO IMAGE (3D FOLLOW MOUSE) */
+/* HERO IMAGE */
 .hero-img{
   width:380px;
   transition:0.2s;
   animation:float 4s ease-in-out infinite;
-  transform-style:preserve-3d;
 }
 
 @keyframes float{
@@ -130,7 +119,9 @@ header{
   100%{transform:translateY(0);}
 }
 
-/* ================= SECTION ================= */
+/* ===================================================
+🎴 5. CARD SYSTEM
+=================================================== */
 .section{
   padding:120px 10%;
 }
@@ -138,10 +129,8 @@ header{
 .section h2{
   font-size:40px;
   margin-bottom:30px;
-  animation:fadeUp 1s ease;
 }
 
-/* ================= CARDS ================= */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -149,52 +138,65 @@ header{
 }
 
 .card{
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
+  background:var(--card);
   padding:25px;
-  border-radius:18px;
+  border-radius:16px;
   backdrop-filter:blur(10px);
   transition:0.3s;
-  transform:translateY(0);
-  animation:fadeUp 1s ease;
+  cursor:pointer;
 }
 
 .card:hover{
   transform:translateY(-15px) scale(1.05);
-  box-shadow:0 0 40px rgba(76,201,240,0.5);
+  box-shadow:0 0 40px var(--glow);
 }
 
-/* ================= VIDEO ================= */
-.video{
-  width:100%;
-  height:450px;
-  border-radius:18px;
-  border:none;
-  box-shadow:0 0 30px rgba(0,0,0,0.5);
+/* ===================================================
+🌟 6. EFFECT SYSTEM
+=================================================== */
+.particle{
+  position:fixed;
+  width:5px;
+  height:5px;
+  background:var(--main);
+  border-radius:50%;
+  opacity:0.5;
+  animation:floatUp linear infinite;
 }
 
-/* ================= ANIMATIONS ================= */
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
+@keyframes floatUp{
+  from{transform:translateY(100vh);opacity:0;}
+  50%{opacity:1;}
+  to{transform:translateY(-10vh);opacity:0;}
 }
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(50px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-/* ================= CURSOR GLOW ================= */
 .cursor-glow{
   position:fixed;
   width:20px;
   height:20px;
-  background:#4cc9f0;
+  background:var(--main);
   border-radius:50%;
+  filter:blur(10px);
   pointer-events:none;
-  mix-blend-mode:screen;
   transform:translate(-50%,-50%);
-  filter:blur(8px);
+}
+
+/* ===================================================
+🎬 7. VIDEO
+=================================================== */
+.video{
+  width:100%;
+  height:450px;
+  border-radius:16px;
+  border:none;
+}
+
+/* ===================================================
+✨ 8. ANIMATION
+=================================================== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 </style>
@@ -202,25 +204,31 @@ header{
 
 <body>
 
-<div class="bg1"></div>
-<div class="bg2"></div>
+<!-- ===================================================
+🌌 EFFECT ELEMENTS
+=================================================== -->
+<div class="bg-glow"></div>
 <div class="cursor-glow" id="cursor"></div>
 
+<!-- ===================================================
+🎯 HEADER
+=================================================== -->
 <header>
   <div class="logo">AmJ</div>
 </header>
 
-<!-- HERO -->
+<!-- ===================================================
+🎮 HERO SECTION
+=================================================== -->
 <section class="hero">
 
   <div class="hero-text">
     <h1>Welcome to <span>AmJ World</span></h1>
     <p>
-      สไตล์เว็บระดับเกม AAA แบบ :contentReference[oaicite:2]{index=2}  
-      inspired by :contentReference[oaicite:3]{index=3}
+      Inspired by :contentReference[oaicite:2]{index=2} and :contentReference[oaicite:3]{index=3}
     </p>
 
-    <a class="btn">Play Now</a>
+    <div class="btn">Play Now</div>
   </div>
 
   <img class="hero-img" id="heroImg"
@@ -228,41 +236,72 @@ header{
 
 </section>
 
-<!-- SECTION -->
+<!-- ===================================================
+🎴 CARDS SECTION (EDIT EASY HERE)
+=================================================== -->
 <section class="section">
   <h2>🔥 Characters</h2>
 
-  <div class="grid">
-    <div class="card">⚡ Speed Fighter</div>
-    <div class="card">🔥 Fire Mage</div>
-    <div class="card">🛡 Tank Guard</div>
+  <div class="grid" id="cardContainer">
+    <!-- 🎯 ADD CARDS HERE (DATA CONTROLLED BELOW) -->
   </div>
 </section>
 
-<!-- VIDEO -->
+<!-- ===================================================
+🎬 VIDEO SECTION
+=================================================== -->
 <section class="section">
   <h2>🎬 Gameplay</h2>
 
   <iframe class="video"
-    src="https://www.youtube.com/embed/QIbQG2Y_DVE"
-    allowfullscreen>
+    src="https://www.youtube.com/embed/QIbQG2Y_DVE">
   </iframe>
 
 </section>
 
+<!-- ===================================================
+⚙️ SCRIPT SYSTEM
+=================================================== -->
 <script>
 
-/* ================= PARTICLES ================= */
-for(let i=0;i<25;i++){
-  let p=document.createElement("div");
+/* ===================================================
+📦 9. DATA (แก้ตรงนี้เพิ่มคอนเทนต์ง่ายสุด)
+=================================================== */
+const gameData = [
+  { title:"⚡ Speed Fighter", desc:"Fast attack + mobility" },
+  { title:"🔥 Fire Mage", desc:"High burst damage" },
+  { title:"🛡 Tank Guard", desc:"High defense HP" }
+];
+
+/* ===================================================
+🎴 10. RENDER CARDS SYSTEM
+=================================================== */
+const container = document.getElementById("cardContainer");
+
+gameData.forEach(item=>{
+  const card = document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+    <h3>${item.title}</h3>
+    <p>${item.desc}</p>
+  `;
+  container.appendChild(card);
+});
+
+/* ===================================================
+🌟 11. PARTICLES SYSTEM
+=================================================== */
+for(let i=0;i<20;i++){
+  const p=document.createElement("div");
   p.className="particle";
   p.style.left=Math.random()*100+"vw";
   p.style.animationDuration=(3+Math.random()*5)+"s";
-  p.style.opacity=Math.random();
   document.body.appendChild(p);
 }
 
-/* ================= CURSOR ================= */
+/* ===================================================
+🧠 12. CURSOR EFFECT
+=================================================== */
 const cursor=document.getElementById("cursor");
 
 document.addEventListener("mousemove",(e)=>{
@@ -270,12 +309,14 @@ document.addEventListener("mousemove",(e)=>{
   cursor.style.top=e.clientY+"px";
 });
 
-/* ================= HERO 3D FOLLOW ================= */
+/* ===================================================
+🎮 13. HERO FOLLOW MOUSE
+=================================================== */
 const heroImg=document.getElementById("heroImg");
 
 document.addEventListener("mousemove",(e)=>{
-  let x=(window.innerWidth/2 - e.clientX)/25;
-  let y=(window.innerHeight/2 - e.clientY)/25;
+  let x=(window.innerWidth/2 - e.clientX)/30;
+  let y=(window.innerHeight/2 - e.clientY)/30;
 
   heroImg.style.transform=
     `rotateY(${x}deg) rotateX(${y}deg) translateY(-10px)`;
