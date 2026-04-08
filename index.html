@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>AmJ Portfolio</title>
+  <title>My Videos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
@@ -16,242 +16,147 @@
     }
 
     header {
-      background: #020617;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 { color: #38bdf8; }
-
-    nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-    }
-
-    nav a:hover { color: #38bdf8; }
-
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-    }
-
-    .profile-container {
-      position: relative;
-      display: inline-block;
-    }
-
-    .profile-img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #38bdf8;
-      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
-    }
-
-    .profile-img:hover {
-      transform: scale(1.1) translateY(-8px);
-      box-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8;
-    }
-
-    /* 💬 bubble */
-    .speech-bubble {
-      position: absolute;
-      top: -10px;
-      right: -120px;
-      background: white;
-      color: #0f172a;
-      padding: 10px 15px;
-      border-radius: 15px;
-      font-weight: bold;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      animation: float 2s ease-in-out infinite;
-    }
-
-    .speech-bubble::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 20px;
-      border-width: 10px;
-      border-style: solid;
-      border-color: white transparent transparent transparent;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0px); }
-    }
-
-    .section {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .card {
-      background: #1e293b;
       padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
+      text-align: center;
+      background: #020617;
+      color: #38bdf8;
+      font-size: 22px;
     }
 
-    /* 🎬 Netflix Row */
-    .youtube-row {
-      display: flex;
-      overflow-x: auto;
-      gap: 20px;
-      padding: 20px 0;
+    .player {
+      max-width: 900px;
+      margin: 30px auto;
     }
 
-    /* 🎥 Card */
-    .video-card {
-      position: relative;
-      min-width: 300px;
-      height: 180px;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
-
-    .video-card iframe {
+    .player iframe {
       width: 100%;
-      height: 100%;
+      height: 500px;
+      border-radius: 15px;
       border: none;
     }
 
-    /* overlay */
-    .video-card::before {
-      content: "";
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 30px;
+    }
+
+    /* 🎴 card */
+    .video-card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.1s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card-inner img {
+      width: 100%;
+      display: block;
+      border-radius: 15px;
+    }
+
+    .video-title {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #e2e8f0;
+    }
+
+    /* ✨ แสงสะท้อน */
+    .glare {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), transparent);
       opacity: 0;
-      transition: 0.3s;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
 
-    /* title */
-    .video-info {
-      position: absolute;
-      bottom: 10px;
-      left: 15px;
-      color: white;
-      font-weight: bold;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: 0.3s;
-    }
-
-    /* hover effect */
-    .video-card:hover {
-      transform: scale(1.2);
-      z-index: 10;
-    }
-
-    .video-card:hover::before {
+    .card-inner:hover .glare {
       opacity: 1;
-    }
-
-    .video-card:hover .video-info {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .youtube-row::-webkit-scrollbar {
-      display: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #020617;
-      margin-top: 40px;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>AmJ</h1>
-  <nav>
-    <a href="#about">เกี่ยวกับ</a>
-    <a href="#youtube">YouTube</a>
-    <a href="#contact">ติดต่อ</a>
-  </nav>
-</header>
+<header>🎬 My Channel</header>
 
-<section class="hero">
-  <div class="profile-container">
-    <img src="profile-A.jpg" class="profile-img">
+<div class="player">
+  <iframe id="main-video" src="https://www.youtube.com/embed/QIbQG2Y_DVE"></iframe>
+</div>
 
-    <div class="speech-bubble" id="bubble-text">
-      WASSUP🍀
+<div class="video-grid">
+
+  <!-- card -->
+  <div class="video-card" onclick="playVideo('QIbQG2Y_DVE')">
+    <div class="card-inner">
+      <img src="https://img.youtube.com/vi/QIbQG2Y_DVE/hqdefault.jpg">
+      <div class="glare"></div>
     </div>
+    <div class="video-title">Highlight 🔥</div>
   </div>
-</section>
 
-<section id="about" class="section">
-  <h2>เกี่ยวกับฉัน</h2>
-  <div class="card">
-    <p>Hey! I’m into games, YouTube and content creation 🎮</p>
+  <div class="video-card" onclick="playVideo('2u9g9D5_bx4')">
+    <div class="card-inner">
+      <img src="https://img.youtube.com/vi/2u9g9D5_bx4/hqdefault.jpg">
+      <div class="glare"></div>
+    </div>
+    <div class="video-title">Funny 😂</div>
   </div>
-</section>
 
-<!-- 🎬 YouTube Netflix Style -->
-<section id="youtube" class="section">
-  <h2>🎬 My YouTube</h2>
-
-  <div class="youtube-row">
-
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/QIbQG2Y_DVE"></iframe>
-      <div class="video-info">Video 1</div>
+  <div class="video-card" onclick="playVideo('b-gBRB0wboE')">
+    <div class="card-inner">
+      <img src="https://img.youtube.com/vi/b-gBRB0wboE/hqdefault.jpg">
+      <div class="glare"></div>
     </div>
-
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/2u9g9D5_bx4"></iframe>
-      <div class="video-info">Video 2</div>
-    </div>
-
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/b-gBRB0wboE"></iframe>
-      <div class="video-info">Video 3</div>
-    </div>
-
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/8Gt7-7k_GIk"></iframe>
-      <div class="video-info">Short Video</div>
-    </div>
-
+    <div class="video-title">Epic ⚡</div>
   </div>
-</section>
-  
-<section id="contact" class="section">
-  <h2>ติดต่อ</h2>
-  <div class="card">
-    <p>Email: your@email.com</p>
+
+  <div class="video-card" onclick="playVideo('8Gt7-7k_GIk')">
+    <div class="card-inner">
+      <img src="https://img.youtube.com/vi/8Gt7-7k_GIk/hqdefault.jpg">
+      <div class="glare"></div>
+    </div>
+    <div class="video-title">Short 🎯</div>
   </div>
-</section>
 
-<footer>
-  <p>© 2026 AmJ</p>
-</footer>
+</div>
 
-<!-- 🔄 random bubble -->
 <script>
-  const words = ["WASSUP🍀", "HELLO 👋", "YO 😎", "HI THERE ✨"];
-  const bubble = document.getElementById("bubble-text");
+function playVideo(id) {
+  document.getElementById("main-video").src =
+    "https://www.youtube.com/embed/" + id + "?autoplay=1";
+}
 
-  function randomWord() {
-    bubble.textContent = words[Math.floor(Math.random() * words.length)];
-  }
+/* 🎯 3D tracking */
+document.querySelectorAll(".video-card").forEach(card => {
+  const inner = card.querySelector(".card-inner");
 
-  setInterval(randomWord, 2000);
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const midX = rect.width / 2;
+    const midY = rect.height / 2;
+
+    const rotateY = (x - midX) / 15;
+    const rotateX = -(y - midY) / 15;
+
+    inner.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.05)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    inner.style.transform = "rotateY(0) rotateX(0) scale(1)";
+  });
+});
 </script>
 
 </body>
