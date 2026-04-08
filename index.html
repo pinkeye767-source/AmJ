@@ -43,16 +43,13 @@
       padding: 80px 20px;
     }
 
-    .hero h2 {
-      font-size: 40px;
-      margin-bottom: 10px;
+    /* 🔥 container รูป + bubble */
+    .profile-container {
+      position: relative;
+      display: inline-block;
     }
 
-    .hero p {
-      color: #94a3b8;
-    }
-
-    /* 🔥 รูปโปรไฟล์ + เอฟเฟกต์ */
+    /* 🔥 รูปโปรไฟล์ */
     .profile-img {
       width: 150px;
       height: 150px;
@@ -64,9 +61,49 @@
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
     }
 
+    /* 🖱️ hover เด้ง + เรืองแสง */
     .profile-img:hover {
       transform: scale(1.1) translateY(-8px);
       box-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8;
+    }
+
+    /* 💬 กล่องความคิด */
+    .speech-bubble {
+      position: absolute;
+      top: -10px;
+      right: -120px;
+
+      background: white;
+      color: #0f172a;
+      padding: 10px 15px;
+      border-radius: 15px;
+      font-weight: bold;
+
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+      animation: float 2s ease-in-out infinite;
+    }
+
+    /* 🫧 หาง bubble */
+    .speech-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 20px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+    }
+
+    /* ⬆️ animation ลอย */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .hero p {
+      color: #94a3b8;
     }
 
     .section {
@@ -103,17 +140,23 @@
 </header>
 
 <section class="hero">
-  <img src="Profile-G.gif" alt="profile" class="profile-img">
-  <h2> WASSUP🍀</h2>
+  <div class="profile-container">
+    <img src="profile-A.jpg" alt="profile" class="profile-img">
+
+    <div class="speech-bubble">
+      WASSUP🍀
+    </div>
+  </div>
+
   <p>นี่คือเว็บไซต์ของฉัน สร้างด้วย GitHub Pages</p>
 </section>
 
 <section id="about" class="section">
   <h2>เกี่ยวกับฉัน</h2>
   <div class="card">
-    <p> Hey! I’m into games like Brawl Stars, League of Legends : wild rift
-I also watch YouTube, especially AmJ.
-And yeah, I’m into horticulture too</p>
+    <p>Hey! I’m into games like Brawl Stars, League of Legends : wild rift
+    I also watch YouTube, especially AmJ.
+    And yeah, I’m into horticulture too</p>
   </div>
 </section>
 
