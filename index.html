@@ -3,187 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AmJ AAA Game Web</title>
+<title>AmJ GOD MODE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ================= BASE ================= */
-body {
-  margin:0;
-  font-family:'Prompt',sans-serif;
-  background:#050814;
-  color:white;
-  overflow-x:hidden;
-}
+body {margin:0;font-family:'Prompt',sans-serif;background:#050814;color:white;overflow:hidden;}
 
-/* ================= HERO ================= */
-.hero {
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
+/* HUD */
+.hud {position:fixed;top:10px;left:10px;width:250px;}
+.bar {height:15px;background:#222;border-radius:10px;margin-bottom:10px;overflow:hidden;}
+.fill {height:100%;}
+.hp {background:red;width:80%;}
+.mana {background:cyan;width:60%;}
+.xp {background:lime;width:20%;}
 
-.hero h1 {
-  font-size:60px;
-}
+/* CHARACTER */
+.character {position:fixed;width:70px;transition:0.2s;}
 
-/* ================= XP BAR ================= */
-.xp-bar {
-  width:300px;
-  height:20px;
-  background:#222;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:20px;
-}
+/* ENEMY */
+.enemy {position:fixed;width:60px;}
 
-.xp-fill {
-  height:100%;
-  width:30%;
-  background:linear-gradient(90deg,#4cc9f0,#90dbf4);
-}
+/* INVENTORY */
+.inventory {position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;}
+.slot {width:60px;height:60px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;}
 
-/* ================= CARD ================= */
-.grid {
-  display:flex;
-  gap:20px;
-  padding:50px;
-}
-
-.card {
-  width:200px;
-  height:150px;
-  background:#111;
-  border-radius:15px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-/* ================= CHARACTER ================= */
-.character {
-  position:fixed;
-  width:80px;
-  top:50%;
-  left:50%;
-  transition:0.2s;
-}
-
-/* ================= INVENTORY ================= */
-.inventory {
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:10px;
-}
-
-.slot {
-  width:60px;
-  height:60px;
-  background:#222;
-  border-radius:10px;
-}
-
-/* ================= VIDEOS ================= */
-.videos {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-  padding:50px;
-}
-
-.video-card iframe {
-  width:100%;
-  height:200px;
-  border-radius:10px;
-}
+/* VIDEOS */
+.videos {position:absolute;top:100px;left:0;width:100%;display:flex;gap:20px;overflow-x:auto;padding:20px;}
+.video {min-width:300px;transition:0.3s;}
+.video iframe {width:100%;height:180px;border-radius:10px;}
+.video:hover {transform:scale(1.1);}
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>AmJ AAA World</h1>
-  <div class="xp-bar"><div class="xp-fill" id="xp"></div></div>
+<!-- HUD -->
+<div class="hud">
+  <div class="bar"><div class="fill hp" id="hp"></div></div>
+  <div class="bar"><div class="fill mana" id="mana"></div></div>
+  <div class="bar"><div class="fill xp" id="xp"></div></div>
 </div>
 
-<!-- CARDS -->
-<div class="grid">
-  <div class="card">Warrior</div>
-  <div class="card">Mage</div>
-  <div class="card">Tank</div>
-</div>
-
-<!-- CHARACTER AI -->
+<!-- CHARACTER -->
 <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" class="character" id="char">
+
+<!-- ENEMY -->
+<img src="https://cdn-icons-png.flaticon.com/512/3523/3523887.png" class="enemy" id="enemy">
 
 <!-- INVENTORY -->
 <div class="inventory">
-  <div class="slot"></div>
-  <div class="slot"></div>
-  <div class="slot"></div>
+  <div class="slot">⚔️</div>
+  <div class="slot">🧪</div>
+  <div class="slot">🍗</div>
 </div>
 
 <!-- VIDEOS -->
 <div class="videos" id="videos"></div>
 
 <script>
-/* ================= AI CHARACTER ================= */
+/* ================= AI SYSTEM ================= */
 const char = document.getElementById('char');
-let mouseX = 0;
-let mouseY = 0;
+const enemy = document.getElementById('enemy');
 
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
+let state = "idle"; // idle, follow, flee, eat, sleep
+let mouseX=0, mouseY=0;
 
-function moveChar(){
+addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
+
+function ai(){
   let rect = char.getBoundingClientRect();
   let dx = mouseX - rect.left;
   let dy = mouseY - rect.top;
 
-  // หนีเมาส์
-  char.style.left = (rect.left - dx*0.02) + 'px';
-  char.style.top = (rect.top - dy*0.02) + 'px';
+  if(state==="flee"){
+    char.style.left = rect.left - dx*0.03 + 'px';
+    char.style.top = rect.top - dy*0.03 + 'px';
+  }else if(state==="follow"){
+    char.style.left = rect.left + dx*0.02 + 'px';
+    char.style.top = rect.top + dy*0.02 + 'px';
+  }
 
-  requestAnimationFrame(moveChar);
+  requestAnimationFrame(ai);
 }
-moveChar();
+ai();
 
-/* ================= XP SYSTEM ================= */
-let xp = 30;
+/* CHANGE STATE RANDOM */
+setInterval(()=>{
+  const states=["idle","follow","flee"];
+  state = states[Math.floor(Math.random()*states.length)];
+},3000);
 
-document.body.addEventListener('click', ()=>{
-  xp += 5;
-  document.getElementById('xp').style.width = xp + '%';
+/* ================= COMBAT ================= */
+let hp=80;
+let mana=60;
+let xp=20;
+
+addEventListener('click',()=>{
+  xp+=5;
+  mana-=2;
+
+  document.getElementById('xp').style.width=xp+'%';
+  document.getElementById('mana').style.width=mana+'%';
 });
 
-/* ================= YOUTUBE API ================= */
-const API_KEY = 'YOUR_API_KEY';
-const CHANNEL_ID = 'YOUR_CHANNEL_ID';
+/* ENEMY RANDOM MOVE */
+function moveEnemy(){
+  enemy.style.left = Math.random()*window.innerWidth+'px';
+  enemy.style.top = Math.random()*window.innerHeight+'px';
+}
+setInterval(moveEnemy,2000);
+
+/* ================= YOUTUBE NETFLIX ================= */
+const API_KEY='YOUR_API_KEY';
+const CHANNEL_ID='YOUR_CHANNEL_ID';
 
 async function loadVideos(){
-  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`);
+  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&maxResults=10&order=date`);
   const data = await res.json();
 
-  const container = document.getElementById('videos');
+  const box = document.getElementById('videos');
 
   data.items.forEach(v=>{
     if(v.id.videoId){
-      container.innerHTML += `
-        <div class="video-card">
-          <iframe src="https://www.youtube.com/embed/${v.id.videoId}" allowfullscreen></iframe>
-        </div>
-      `;
+      box.innerHTML += `
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/${v.id.videoId}?mute=1"></iframe>
+      </div>`;
     }
   });
 }
