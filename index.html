@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>AmJ Game Style Site</title>
+<title>AmJ Game Download</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -20,25 +20,6 @@
 body {
   background: radial-gradient(circle at top, #1b2a4a, #050814);
   color: white;
-  overflow-x: hidden;
-}
-
-/* ================= BACKGROUND FX ================= */
-.bg-glow {
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  background: #4cc9f0;
-  filter: blur(200px);
-  opacity: 0.25;
-  top: -100px;
-  left: -100px;
-  animation: move 8s infinite alternate;
-}
-
-@keyframes move {
-  from { transform: translate(0,0); }
-  to { transform: translate(200px,150px); }
 }
 
 /* ================= HEADER ================= */
@@ -46,88 +27,19 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 20px 50px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 100;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
 }
 
 .logo {
-  font-weight: 800;
   font-size: 24px;
-  color: #4cc9f0;
-}
-
-nav a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-nav a:hover {
-  color: #4cc9f0;
-}
-
-/* ================= HERO ================= */
-.hero {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10%;
-}
-
-.hero-text {
-  max-width: 500px;
-}
-
-.hero-text h1 {
-  font-size: 60px;
-  line-height: 1.1;
-}
-
-.hero-text span {
-  color: #4cc9f0;
-}
-
-.hero-text p {
-  margin: 20px 0;
-  color: #b0c4de;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 25px;
-  background: #4cc9f0;
-  color: black;
-  border-radius: 10px;
   font-weight: bold;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px #4cc9f0;
-}
-
-/* HERO IMAGE */
-.hero-img {
-  width: 400px;
-  animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
+  color: #4cc9f0;
 }
 
 /* ================= SECTION ================= */
 .section {
-  padding: 100px 10%;
+  padding: 80px 10%;
 }
 
 .section h2 {
@@ -135,21 +47,22 @@ nav a:hover {
   margin-bottom: 30px;
 }
 
-/* ================= CARDS ================= */
+/* ================= GRID ================= */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
 }
 
+/* ================= CARD ================= */
 .card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  padding: 20px;
+  padding: 15px;
   border-radius: 15px;
-  transition: 0.3s;
-  cursor: pointer;
+  transition: 0.4s;
   backdrop-filter: blur(10px);
+  cursor: pointer;
 }
 
 .card:hover {
@@ -157,12 +70,49 @@ nav a:hover {
   box-shadow: 0 0 30px rgba(76,201,240,0.4);
 }
 
-/* ================= VIDEO ================= */
-.video {
+/* ================= IMAGE ================= */
+.game-img {
   width: 100%;
-  height: 400px;
-  border-radius: 15px;
-  border: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* ================= TEXT ================= */
+.card h3 {
+  margin-bottom: 5px;
+}
+
+.card p {
+  color: #b0c4de;
+  margin-bottom: 10px;
+}
+
+/* ================= BUTTON ================= */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #4cc9f0;
+  color: black;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+/* ปุ่มซ่อนก่อน */
+.card .btn {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* hover แล้วเด้ง */
+.card:hover .btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn:hover {
+  box-shadow: 0 0 20px #4cc9f0;
 }
 
 /* ================= FOOTER ================= */
@@ -177,70 +127,42 @@ footer {
 
 <body>
 
-<div class="bg-glow"></div>
-
 <header>
   <div class="logo">AmJ</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#games">Games</a>
-    <a href="#videos">Videos</a>
-  </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero" id="home">
-
-  <div class="hero-text">
-    <h1>Welcome to <span>AmJ World</span></h1>
-    <p>
-      สไตล์เว็บเกมแบบ :contentReference[oaicite:2]{index=2}  
-      inspired by :contentReference[oaicite:3]{index=3}  
-    </p>
-
-    <a class="btn" href="#games">Enter Now</a>
-  </div>
-
-  <img class="hero-img" src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
-
-</section>
-
-<!-- GAMES -->
-<section class="section" id="games">
+<!-- DOWNLOAD GAMES -->
+<section class="section">
   <h2>🎮 Download My Games</h2>
 
   <div class="grid">
 
-    <!-- GAME 1 -->
     <div class="card">
-      <h3>⚡ Brawl Stars Game</h3>
-      <p>In IOS</p>
-      <a class="btn" href="https://apps.apple.com/us/app/brawl-stars/id1229016807">⬇ Download</a>
+      <img src="https://via.placeholder.com/300x180" class="game-img">
+      <h3>⚡ Warrior Game</h3>
+      <p>Action RPG ต่อสู้สุดมันส์</p>
+      <a class="btn" href="#" onclick="alert('Coming Soon!')">⬇ Download</a>
     </div>
 
-    <!-- GAME 2 -->
     <div class="card">
-      <h3>🔥 Brawl Stars Game</h3>
-      <p>In ANDROID</p>
-      <a class="btn" href="https://play.google.com/store/apps/details?id=com.supercell.brawlstars&hl=en">⬇ Download</a>
+      <img src="https://via.placeholder.com/300x180" class="game-img">
+      <h3>🔥 Mage Game</h3>
+      <p>เวทย์มนต์ + สกิลอลังการ</p>
+      <a class="btn" href="#" onclick="alert('Coming Soon!')">⬇ Download</a>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x180" class="game-img">
+      <h3>🛡 Tank Game</h3>
+      <p>สายอึด ป้องกันขั้นเทพ</p>
+      <a class="btn" href="#" onclick="alert('Coming Soon!')">⬇ Download</a>
     </div>
 
   </div>
 </section>
 
-<!-- VIDEOS -->
-<section class="section" id="videos">
-  <h2>🎬 Gameplay</h2>
-
-  <iframe class="video"
-    src="https://www.youtube.com/embed/QIbQG2Y_DVE"
-    allowfullscreen>
-  </iframe>
-
-</section>
-
 <footer>
-  © 2026 AmJ Game Style Website
+  © 2026 AmJ Game Download
 </footer>
 
 </body>
