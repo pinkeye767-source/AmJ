@@ -2,118 +2,174 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>AmJ Ultimate Game Site</title>
+<title>AmJ Game Style Site</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= THEME ================= */
-:root{
-  --gold:#d4af37;
-  --dark:#05060a;
-  --text:#e6e6e6;
-  --panel:rgba(10,12,18,0.7);
+/* ================= BASE ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
 }
 
-body{
-  margin:0;
-  font-family:'Prompt',sans-serif;
-  background:var(--dark);
-  color:var(--text);
-  overflow-x:hidden;
+body {
+  background: radial-gradient(circle at top, #1b2a4a, #050814);
+  color: white;
+  overflow-x: hidden;
 }
 
-/* ================= BACKGROUND ================= */
-.bg{
-  position:fixed;
-  inset:0;
-  background:url("https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?auto=format&fit=crop&w=1600&q=80");
-  background-size:cover;
-  filter:brightness(0.3);
-  z-index:-1;
+/* ================= BACKGROUND FX ================= */
+.bg-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: #4cc9f0;
+  filter: blur(200px);
+  opacity: 0.25;
+  top: -100px;
+  left: -100px;
+  animation: move 8s infinite alternate;
+}
+
+@keyframes move {
+  from { transform: translate(0,0); }
+  to { transform: translate(200px,150px); }
 }
 
 /* ================= HEADER ================= */
-header{
-  position:fixed;
-  width:100%;
-  padding:20px 40px;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(10px);
-  z-index:100;
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
 }
 
-.logo{
-  color:var(--gold);
-  font-size:24px;
-  font-weight:bold;
+.logo {
+  font-weight: 800;
+  font-size: 24px;
+  color: #4cc9f0;
+}
+
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #4cc9f0;
 }
 
 /* ================= HERO ================= */
-.hero{
-  height:100vh;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 10%;
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
 }
 
-.hero h1{
-  font-size:60px;
+.hero-text {
+  max-width: 500px;
 }
 
-.hero span{
-  color:var(--gold);
+.hero-text h1 {
+  font-size: 60px;
+  line-height: 1.1;
 }
 
-.hero-img{
-  width:380px;
+.hero-text span {
+  color: #4cc9f0;
 }
 
-/* ================= CARD ================= */
-.section{
-  padding:120px 10%;
+.hero-text p {
+  margin: 20px 0;
+  color: #b0c4de;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #4cc9f0;
+  color: black;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
-.card{
-  background:var(--panel);
-  padding:20px;
-  border-radius:12px;
-  transition:0.3s;
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #4cc9f0;
 }
 
-.card:hover{
-  transform:translateY(-10px);
+/* HERO IMAGE */
+.hero-img {
+  width: 400px;
+  animation: float 4s ease-in-out infinite;
 }
 
-/* ================= 🐥 CHICK ================= */
-#chick{
-  position:fixed;
-  width:80px;
-  z-index:9999;
-  pointer-events:none;
-  transition:all 1.5s linear;
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
 }
 
-#bubble{
-  position:fixed;
-  background:white;
-  color:black;
-  padding:6px 10px;
-  border-radius:10px;
-  font-size:12px;
-  z-index:9999;
-  pointer-events:none;
-  opacity:0;
-  transition:0.3s;
+/* ================= SECTION ================= */
+.section {
+  padding: 100px 10%;
+}
+
+.section h2 {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+/* ================= CARDS ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 15px;
+  transition: 0.3s;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 30px rgba(76,201,240,0.4);
+}
+
+/* ================= VIDEO ================= */
+.video {
+  width: 100%;
+  height: 400px;
+  border-radius: 15px;
+  border: none;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #777;
 }
 
 </style>
@@ -121,177 +177,72 @@ header{
 
 <body>
 
-<div class="bg"></div>
+<div class="bg-glow"></div>
 
 <header>
   <div class="logo">AmJ</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#videos">Videos</a>
+  </nav>
 </header>
 
-<section class="hero">
-  <div>
-    <h1>Welcome to <span>AmJ</span></h1>
-    <p>Ultimate Game Experience</p>
+<!-- HERO -->
+<section class="hero" id="home">
+
+  <div class="hero-text">
+    <h1>Welcome to <span>AmJ World</span></h1>
+    <p>
+      สไตล์เว็บเกมแบบ :contentReference[oaicite:2]{index=2}  
+      inspired by :contentReference[oaicite:3]{index=3}  
+    </p>
+
+    <a class="btn" href="#games">Enter Now</a>
   </div>
 
-  <img class="hero-img"
-  src="https://i.pinimg.com/originals/7c/e3/06/7ce306ca1201a5c34b2a1982d68475ea.gif">
+  <img class="hero-img" src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+
 </section>
 
-<section class="section">
-  <h2>Characters</h2>
-  <div class="grid" id="cardContainer"></div>
+<!-- GAMES -->
+<section class="section" id="games">
+  <h2>🔥 My Characters</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>⚡ Warrior</h3>
+      <p>Fast attack + high damage</p>
+    </div>
+
+    <div class="card">
+      <h3>🔥 Mage</h3>
+      <p>Magic burst + control</p>
+    </div>
+
+    <div class="card">
+      <h3>🛡 Tank</h3>
+      <p>High HP + defense</p>
+    </div>
+
+  </div>
 </section>
 
-<!-- 🐥 CHICK -->
-<img id="chick" src="https://media.tenor.com/2roX3uxz_68AAAAi/cute-chicken.gif">
-<div id="bubble"></div>
+<!-- VIDEOS -->
+<section class="section" id="videos">
+  <h2>🎬 Gameplay</h2>
 
-<script>
+  <iframe class="video"
+    src="https://www.youtube.com/embed/QIbQG2Y_DVE"
+    allowfullscreen>
+  </iframe>
 
-/* ================= DATA ================= */
-const gameData = [
-  { title:"⚔️ Assassin", desc:"Fast kill" },
-  { title:"🔥 Mage", desc:"Magic burst" },
-  { title:"🛡 Tank", desc:"High defense" }
-];
+</section>
 
-const container=document.getElementById("cardContainer");
-
-gameData.forEach(item=>{
-  const div=document.createElement("div");
-  div.className="card";
-  div.innerHTML=`<h3>${item.title}</h3><p>${item.desc}</p>`;
-  container.appendChild(div);
-});
-
-/* ================= 🐥 AI SYSTEM ================= */
-const chick = document.getElementById("chick");
-const bubble = document.getElementById("bubble");
-
-let chickState = "wander";
-let hunger = 0;
-let sleep = 0;
-
-let x = window.innerWidth/2;
-let y = window.innerHeight/2;
-
-let foods = [];
-
-/* 🍞 วางอาหาร */
-document.addEventListener("click",(e)=>{
-  const food = document.createElement("div");
-  food.style.position="fixed";
-  food.style.left=e.clientX+"px";
-  food.style.top=e.clientY+"px";
-  food.innerHTML="🍞";
-  food.style.fontSize="24px";
-  document.body.appendChild(food);
-
-  foods.push({x:e.clientX,y:e.clientY,el:food});
-});
-
-/* 🧠 AI LOOP */
-setInterval(()=>{
-  hunger+=1;
-  sleep+=0.5;
-
-  if(hunger > 50) chickState="hungry";
-  if(sleep > 60) chickState="sleep";
-},1000);
-
-/* 🐥 MAIN */
-function updateChick(){
-
-  if(chickState==="sleep"){
-    showBubble("😴 Zzz...");
-    setTimeout(()=>{
-      sleep=0;
-      chickState="wander";
-    },4000);
-    return;
-  }
-
-  if(chickState==="hungry" && foods.length>0){
-    let food = foods[0];
-    showBubble("🍗 หิว!");
-    moveTo(food.x,food.y);
-
-    if(distance(x,y,food.x,food.y)<50){
-      food.el.remove();
-      foods.shift();
-      hunger=0;
-      chickState="wander";
-      showBubble("😋 อิ่ม!");
-    }
-    return;
-  }
-
-  // หนีเมาส์
-  if(mouseDist < 120){
-    showBubble("😱");
-    let angle = Math.atan2(y-mouseY, x-mouseX);
-    moveTo(x + Math.cos(angle)*150, y + Math.sin(angle)*150);
-    return;
-  }
-
-  // เดินตามเมาส์
-  if(Math.random()<0.4){
-    showBubble("🐥 จิ๊บๆ");
-    moveTo(mouseX,mouseY);
-    return;
-  }
-
-  // เดินสุ่ม
-  let newX = Math.random()*window.innerWidth;
-  let newY = Math.random()*window.innerHeight;
-  moveTo(newX,newY);
-}
-
-/* 🎯 MOVE */
-function moveTo(nx,ny){
-  let dx = nx - x;
-
-  if(dx > 0){
-    chick.style.transform="scaleX(1)";
-  }else{
-    chick.style.transform="scaleX(-1)";
-  }
-
-  chick.style.left = nx+"px";
-  chick.style.top = ny+"px";
-
-  x=nx;
-  y=ny;
-}
-
-/* 📏 DIST */
-function distance(x1,y1,x2,y2){
-  return Math.hypot(x1-x2,y1-y2);
-}
-
-/* 🖱️ MOUSE */
-let mouseX=0, mouseY=0, mouseDist=999;
-
-document.addEventListener("mousemove",(e)=>{
-  mouseX=e.clientX;
-  mouseY=e.clientY;
-  mouseDist = distance(x,y,mouseX,mouseY);
-});
-
-/* 💬 BUBBLE */
-function showBubble(text){
-  bubble.innerText=text;
-  bubble.style.left=(x+40)+"px";
-  bubble.style.top=(y-10)+"px";
-  bubble.style.opacity=1;
-
-  setTimeout(()=>bubble.style.opacity=0,1000);
-}
-
-/* LOOP */
-setInterval(updateChick,2000);
-
-</script>
+<footer>
+  © 2026 AmJ Game Style Website
+</footer>
 
 </body>
 </html>
