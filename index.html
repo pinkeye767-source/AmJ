@@ -244,22 +244,14 @@ footer {
   </div>
 
   <div class="hero-right">
-    <video class="hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-      onended="this.play()"
-      onmouseenter="this.playbackRate=0.6"
-      onmouseleave="this.playbackRate=1">
-      
+    <video class="hero-video" autoplay muted loop playsinline>
+      <!-- ⚠️ ชื่อไฟล์ต้องตรง -->
       <source src="AmJV.mp4" type="video/mp4">
     </video>
   </div>
 
 </section>
-
+  
 <!-- ================= GAMES ================= -->
 <section class="section" id="games">
   <h2>🎮 Download My Games</h2>
@@ -299,11 +291,10 @@ footer {
 <!-- ================= VIDEOS ================= -->
 <section class="section" id="videos">
   <h2>🎬 Gameplay</h2>
-
-  <video class="video" controls loop>
-    <source src="AmJV.mp4" type="video/mp4">
-  </video>
-
+  <iframe class="video"
+    src="https://www.youtube.com/embed/QIbQG2Y_DVE"
+    allowfullscreen>
+  </iframe>
 </section>
 
 <footer>
