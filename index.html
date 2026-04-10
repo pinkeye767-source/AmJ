@@ -1,3 +1,161 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>AmJ Game Style Site</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= BASE ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #1b2a4a, #050814);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ================= HEADER ================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 24px;
+  color: #4cc9f0;
+}
+
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+/* ================= SECTION ================= */
+.section {
+  padding: 120px 10%;
+}
+
+.section h2 {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+/* ================= GRID ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+/* ================= CARD (AAA STYLE) ================= */
+.card {
+  position: relative;
+  height: 260px;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+/* พื้นหลังภาพ */
+.card-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: 0.5s;
+}
+
+/* gradient กันตัวหนังสือจมหาย */
+.card-bg::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+}
+
+/* เนื้อหา */
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+}
+
+.card-content h3 {
+  font-size: 22px;
+}
+
+.card-content p {
+  color: #ccc;
+  margin: 5px 0;
+}
+
+/* ปุ่ม */
+.btn {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #4cc9f0;
+  color: black;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #4cc9f0;
+}
+
+/* hover effect */
+.card:hover .card-bg {
+  transform: scale(1.15);
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AmJ</div>
+  <nav>
+    <a href="#games">Games</a>
+  </nav>
+</header>
+
+<!-- ================= GAMES ================= -->
 <section class="section" id="games">
   <h2>🎮 Download My Games</h2>
 
@@ -5,39 +163,40 @@
 
     <!-- GAME 1 -->
     <div class="card">
-      <div class="img-box">
-        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e" class="game-img">
-        <div class="overlay">🎮 Play Now</div>
+      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1605902711622-cfb43c4437d1')"></div>
+      <div class="card-content">
+        <h3>⚡ Warrior Game</h3>
+        <p>Action RPG ต่อสู้สุดมันส์</p>
+        <a class="btn" href="#" onclick="alert('Coming Soon!')">⬇ Download</a>
       </div>
-
-      <h3>⚡ Warrior Game</h3>
-      <p>Brawl Stars In IOS</p>
-      <a class="btn" href="#">⬇ Download</a>
     </div>
 
     <!-- GAME 2 -->
     <div class="card">
-      <div class="img-box">
-        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420" class="game-img">
-        <div class="overlay">🔥 Magic Battle</div>
+      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf')"></div>
+      <div class="card-content">
+        <h3>🔥 Mage Game</h3>
+        <p>เวทย์มนต์ + สกิลอลังการ</p>
+        <a class="btn" href="#" onclick="alert('Coming Soon!')">⬇ Download</a>
       </div>
-
-      <h3>🔥 Mage Game</h3>
-      <p>Brawl Stars In ANDROID</p>
-      <a class="btn" href="#">⬇ Download</a>
     </div>
 
     <!-- GAME 3 -->
     <div class="card">
-      <div class="img-box">
-        <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8" class="game-img">
-        <div class="overlay">🛡 Tank Mode</div>
+      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1603481546238-487240415921')"></div>
+      <div class="card-content">
+        <h3>🛡 Tank Game</h3>
+        <p>สายอึด ป้องกันขั้นเทพ</p>
+        <a class="btn" href="#" onclick="alert('Coming Soon!')">⬇ Download</a>
       </div>
-
-      <h3>🛡 Tank Game</h3>
-      <p>High Defense Mode</p>
-      <a class="btn" href="#">⬇ Download</a>
     </div>
 
   </div>
 </section>
+
+<footer>
+  © 2026 AmJ Game Style Website
+</footer>
+
+</body>
+</html>
