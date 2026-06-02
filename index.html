@@ -1,435 +1,99 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Smart Farm GIS</title>
-<!-- Leaflet -->
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<!-- Draw -->
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartFarmGIS Pro</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
 <style>
-html,body{
-    margin:0;
-    padding:0;
-    height:100%;
-    font-family:sans-serif;
-}
-#map{
-    width:100%;
-    height:100vh;
-}
-.sidebar{
-    position:fixed;
-    top:10px;
-    left:10px;
-    width:320px;
-    max-height:90vh;
-    overflow:auto;
-    background:white;
-    padding:15px;
-    border-radius:15px;
-    z-index:1000;
-    box-shadow:0 2px 12px rgba(0,0,0,0.25);
-}
-.toolbar{
-    position:fixed;
-    bottom:15px;
-    left:50%;
-    transform:translateX(-50%);
-    background:white;
-    padding:10px;
-    border-radius:20px;
-    z-index:1000;
-    display:flex;
-    gap:8px;
-    overflow:auto;
-    max-width:95%;
-    box-shadow:0 2px 12px rgba(0,0,0,0.2);
-}
-button{
-    border:none;
-    padding:10px 14px;
-    border-radius:10px;
-    background:#f0f0f0;
-    cursor:pointer;
-    white-space:nowrap;
-}
-button:hover{
-    background:#ddd;
-}
-input,select{
-    width:100%;
-    padding:8px;
-    margin-top:5px;
-    border-radius:8px;
-    border:1px solid #ccc;
-}
-.section{
-    margin-top:15px;
-}
-.item{
-    margin-top:8px;
-}
+html,body,#map{height:100%;margin:0}
+#map{z-index:1}
+.panel{position:absolute;top:10px;left:10px;z-index:1000;background:#fff;padding:12px;border-radius:12px;max-width:320px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+button{margin:2px;padding:6px 10px}
 </style>
 </head>
 <body>
 <div id="map"></div>
-<div class="sidebar">
-<h2>🌾 Smart Farm GIS</h2>
-<div id="summary"></div>
-<div class="section">
-<h3>💰 ต้นทุน</h3>
-<input type="text"
-id="costName"
-placeholder="รายการ">
-<input type="number"
-id="costValue"
-placeholder="จำนวนเงิน">
-<button onclick="addCost()">
-➕ เพิ่มต้นทุน
-</button>
-<div id="costList"></div>
+<div class="panel">
+<h3>🌾 SmartFarmGIS Pro</h3>
+<div id="sum">พร้อมใช้งาน</div>
+<button onclick="exportGeoJSON()">Export GeoJSON</button>
+<input type="file" id="importFile">
 </div>
-<div class="section">
-<h3>🧪 คำนวณปุ๋ย</h3>
-<input type="number"
-id="needN"
-placeholder="ธาตุอาหารที่ต้องการ (kg)">
-<input type="number"
-id="fertPercent"
-placeholder="% ปุ๋ย">
-<button onclick="calculateFertilizer()">
-🧮 คำนวณ
-</button>
-<div id="fertResult"></div>
-</div>
-<div class="section">
-<h3>💧 ระบบน้ำ</h3>
-<input type="number"
-id="pipeLength"
-placeholder="ความยาวท่อ (เมตร)">
-<button onclick="calculateWater()">
-🚰 คำนวณ
-</button>
-<div id="waterResult"></div>
-</div>
-<div class="section">
-<h3>🏞 คันนา</h3>
-<input type="number"
-id="bundWidth"
-placeholder="กว้าง">
-<input type="number"
-id="bundHeight"
-placeholder="สูง">
-<input type="number"
-id="bundLength"
-placeholder="ยาว">
-<button onclick="calculateBund()">
-📐 คำนวณ
-</button>
-<div id="bundResult"></div>
-</div>
-</div>
-<div class="toolbar">
-<button onclick="exportPDF()">
-📄 PDF
-</button>
-<button onclick="exportExcel()">
-📊 Excel
-</button>
-<button onclick="toggle3D()">
-🛰 3D
-</button>
-<button onclick="simulateDrone()">
-🚁 Drone
-</button>
-<button onclick="clearAllData()">
-🗑 ล้าง
-</button>
-</div>
-<!-- Leaflet -->
+
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- Draw -->
 <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-<!-- Turf -->
 <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
-<!-- PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- Excel -->
-<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 <script>
-//////////////////////////////////////////////////
-// แผนที่
-//////////////////////////////////////////////////
-const map =
-L.map('map').setView([14.9799,102.0977],15);
-//////////////////////////////////////////////////
-// ดาวเทียม
-//////////////////////////////////////////////////
-const satellite = L.tileLayer(
-'https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-{
-    maxZoom:20,
-    subdomains:['mt0','mt1','mt2','mt3']
-}
-).addTo(map);
-//////////////////////////////////////////////////
-// Terrain
-//////////////////////////////////////////////////
-const terrain = L.tileLayer(
-'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-{
-    maxZoom:17
-}
-);
-let terrainMode = false;
-//////////////////////////////////////////////////
-// Layer
-//////////////////////////////////////////////////
-const layers = {
-    rice:L.featureGroup().addTo(map),
-    sugarcane:L.featureGroup().addTo(map),
-    cassava:L.featureGroup().addTo(map),
-    water:L.featureGroup().addTo(map),
-    tree:L.featureGroup().addTo(map)
-};
-//////////////////////////////////////////////////
-// สี
-//////////////////////////////////////////////////
-const colors = {
-    rice:"#2ecc71",
-    sugarcane:"#f1c40f",
-    cassava:"#a0522d",
-    water:"#3498db",
-    tree:"#145a32"
-};
-//////////////////////////////////////////////////
-// Storage
-//////////////////////////////////////////////////
-let farmData =
-JSON.parse(localStorage.getItem("farmData")) || [];
-let costData =
-JSON.parse(localStorage.getItem("costData")) || [];
-//////////////////////////////////////////////////
-// โหลดข้อมูล
-//////////////////////////////////////////////////
-farmData.forEach(drawSavedArea);
-//////////////////////////////////////////////////
-// Draw Tool
-//////////////////////////////////////////////////
-const drawControl =
-new L.Control.Draw({
-    edit:false,
-    draw:{
-        polygon:true,
-        rectangle:true,
-        polyline:false,
-        marker:false,
-        circle:false,
-        circlemarker:false
-    }
+const map=L.map('map').setView([14.9799,102.0977],15);
+
+const esri=L.tileLayer(
+'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+{attribution:'Esri'}).addTo(map);
+
+const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+L.control.layers({"Satellite":esri,"OSM":osm}).addTo(map);
+
+const fg=new L.FeatureGroup().addTo(map);
+
+map.addControl(new L.Control.Draw({
+ edit:{featureGroup:fg},
+ draw:{polygon:true,rectangle:true,circle:false,marker:false,polyline:false,circlemarker:false}
+}));
+
+let features=[];
+
+map.on(L.Draw.Event.CREATED,e=>{
+ const layer=e.layer;
+ fg.addLayer(layer);
+ const gj=layer.toGeoJSON();
+ const area=turf.area(gj);
+ gj.properties={area_m2:area,area_rai:(area/1600).toFixed(2)};
+ features.push(gj);
+ document.getElementById("sum").innerHTML="พื้นที่ "+(area/1600).toFixed(2)+" ไร่";
+ save();
 });
-map.addControl(drawControl);
-//////////////////////////////////////////////////
-// วาดเสร็จ
-//////////////////////////////////////////////////
-map.on(L.Draw.Event.CREATED,function(event){
-    const layer = event.layer;
-    const type = prompt(
-`เลือกประเภท
-rice = ข้าว
-sugarcane = อ้อย
-cassava = มัน
-water = น้ำ
-tree = ไม้`
-    );
-    if(!type || !layers[type]){
-        alert("ประเภทไม่ถูกต้อง");
-        return;
-    }
-    const name =
-    prompt("ชื่อแปลง");
-    const season =
-    prompt("ฤดูกาล");
-    const plantDate =
-    prompt("วันที่ปลูก");
-    //////////////////////////////////////////////////
-    // GeoJSON
-    //////////////////////////////////////////////////
-    const geojson =
-    layer.toGeoJSON();
-    //////////////////////////////////////////////////
-    // พื้นที่
-    //////////////////////////////////////////////////
-    const area =
-    turf.area(geojson);
-    //////////////////////////////////////////////////
-    // NDVI จำลอง
-    //////////////////////////////////////////////////
-    const ndvi =
-    (Math.random()*0.5+0.3).toFixed(2);
-    //////////////////////////////////////////////////
-    // ความชื้นจำลอง
-    //////////////////////////////////////////////////
-    const moisture =
-    Math.floor(Math.random()*40)+40;
-    //////////////////////////////////////////////////
-    // AI วิเคราะห์ดิน
-    //////////////////////////////////////////////////
-    let aiMessage = "";
-    if(type==="rice"){
-        aiMessage =
-        "เหมาะกับพื้นที่ชื้น";
-    }
-    if(type==="cassava"){
-        aiMessage =
-        "ควรเพิ่มอินทรียวัตถุ";
-    }
-    if(type==="water"){
-        aiMessage =
-        "จุดกักเก็บน้ำ";
-    }
-    //////////////////////////////////////////////////
-    // Style
-    //////////////////////////////////////////////////
-    layer.setStyle({
-        color:colors[type],
-        fillColor:colors[type],
-        fillOpacity:0.45
-    });
-    //////////////////////////////////////////////////
-    // Popup
-    //////////////////////////////////////////////////
-    layer.bindPopup(
-`
-<b>${name}</b><br>
-ประเภท:
-${type}<br>
-ฤดู:
-${season}<br>
-วันที่ปลูก:
-${plantDate}<br>
-พื้นที่:
-${(area/1600).toFixed(2)} ไร่<br>
-NDVI:
-${ndvi}<br>
-ความชื้น:
-${moisture}%<br>
-AI:
-${aiMessage}
-`
-    );
-    //////////////////////////////////////////////////
-    // Add Layer
-    //////////////////////////////////////////////////
-    layers[type].addLayer(layer);
-    //////////////////////////////////////////////////
-    // Save
-    //////////////////////////////////////////////////
-    farmData.push({
-        type,
-        name,
-        season,
-        plantDate,
-        area,
-        ndvi,
-        moisture,
-        aiMessage,
-        geojson
-    });
-    localStorage.setItem(
-        "farmData",
-        JSON.stringify(farmData)
-    );
-    updateSummary();
-});
-//////////////////////////////////////////////////
-// โหลดพื้นที่
-//////////////////////////////////////////////////
-function drawSavedArea(item){
-    const geoLayer =
-    L.geoJSON(item.geojson,{
-        style:{
-            color:colors[item.type],
-            fillColor:colors[item.type],
-            fillOpacity:0.45
-        }
-    });
-    geoLayer.bindPopup(
-`
-<b>${item.name}</b><br>
-ประเภท:
-${item.type}<br>
-ฤดู:
-${item.season}<br>
-พื้นที่:
-${(item.area/1600).toFixed(2)} ไร่<br>
-NDVI:
-${item.ndvi}<br>
-ความชื้น:
-${item.moisture}%<br>
-AI:
-${item.aiMessage}
-`
-    );
-    geoLayer.addTo(layers[item.type]);
+
+function save(){
+ localStorage.setItem("smartfarm_features",JSON.stringify(features));
 }
-//////////////////////////////////////////////////
-// Layer Control
-//////////////////////////////////////////////////
-L.control.layers(null,{
-    "🌾 ข้าว":layers.rice,
-    "🌿 อ้อย":layers.sugarcane,
-    "🥔 มัน":layers.cassava,
-    "💧 น้ำ":layers.water,
-    "🌳 ไม้":layers.tree
-}).addTo(map);
-//////////////////////////////////////////////////
-// Summary
-//////////////////////////////////////////////////
-function updateSummary(){
-    let totals = {
-        rice:0,
-        sugarcane:0,
-        cassava:0,
-        water:0,
-        tree:0
-    };
-    farmData.forEach(item=>{
-        totals[item.type]+=item.area;
-    });
-    let totalCost = 0;
-    costData.forEach(c=>{
-        totalCost += Number(c.value);
-    });
-    document.getElementById("summary")
-    .innerHTML =
-`
-<div class="item">
-🌾 ข้าว:
-${(totals.rice/1600).toFixed(2)} ไร่
-</div>
-<div class="item">
-🌿 อ้อย:
-${(totals.sugarcane/1600).toFixed(2)} ไร่
-</div>
-<div class="item">
-🥔 มัน:
-${(totals.cassava/1600).toFixed(2)} ไร่
-</div>
-<div class="item">
-💧 น้ำ:
-${(totals.water/1600).toFixed(2)} ไร่
-</div>
-<div class="item">
-🌳 ไม้:
-${(totals.tree/1600).toFixed(2)} ไร่
-</div>
-<div class="item">
-💰 ต้นทุน:
-${totalCost.toLocaleString()} บาท
-</div>
-`;
+
+function load(){
+ const d=JSON.parse(localStorage.getItem("smartfarm_features")||"[]");
+ features=d;
+ d.forEach(g=>L.geoJSON(g).eachLayer(l=>fg.addLayer(l)));
+}
+load();
+
+function exportGeoJSON(){
+ const blob=new Blob([JSON.stringify({type:"FeatureCollection",features},null,2)],{type:"application/json"});
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);
+ a.download='farm.geojson';
+ a.click();
+}
+
+document.getElementById('importFile').addEventListener('change',e=>{
+ const f=e.target.files[0];
+ if(!f) return;
+ const r=new FileReader();
+ r.onload=()=>{
+   const gj=JSON.parse(r.result);
+   gj.features.forEach(ft=>{
+      features.push(ft);
+      L.geoJSON(ft).eachLayer(l=>fg.addLayer(l));
+   });
+   save();
+ };
+ r.readAsText(f);
+});
+
+if('serviceWorker' in navigator){
+ navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+</body>
+</html>
